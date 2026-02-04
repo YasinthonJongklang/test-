@@ -5,12 +5,10 @@ Suite Teardown   Close Browser
 
 *** Variables ***
 ${URL}           https://computing.kku.ac.th
-# ชื่อ Title ของหน้าเว็บจริงๆ คือ "วิทยาลัยการคอมพิวเตอร์ มหาวิทยาลัยขอนแก่น - College of Computing, Khon Kaen University"
 ${EXPECTED_TITLE}    วิทยาลัยการคอมพิวเตอร์ มหาวิทยาลัยขอนแก่น - College of Computing, Khon Kaen University
 
 *** Test Cases ***
 Open Website Should Work
-    # ระบุ Library นำหน้าเพื่อป้องกันปัญหา "No keyword found"
     SeleniumLibrary.Title Should Be    ${EXPECTED_TITLE}
 
 *** Keywords ***
