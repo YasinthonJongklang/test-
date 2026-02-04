@@ -12,6 +12,10 @@ Open Website Should Work
 
 *** Keywords ***
 Open Browser To Login Page
-    ${options}=    Set Variable    --headless=new --no-sandbox --disable-dev-shm-usage --window-size=1920,1080
+    ${options}=    Create List
+    ...    --headless=new
+    ...    --no-sandbox
+    ...    --disable-dev-shm-usage
+    ...    --window-size=1920,1080
+
     Open Browser    ${URL}    chrome    options=${options}
-    Maximize Browser Window
