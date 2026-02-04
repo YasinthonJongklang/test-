@@ -1,10 +1,10 @@
 *** Settings ***
-Library         SeleniumLibrary
-Suite Setup     Open Browser To Login Page
-Suite Teardown  Close Browser
+Library          SeleniumLibrary
+Suite Setup      Open Browser To Login Page
+Suite Teardown   Close Browser
 
 *** Variables ***
-${URL}          https://computing.kku.ac.th
+${URL}           https://computing.kku.ac.th
 
 *** Test Cases ***
 Open Website Should Work
@@ -12,12 +12,15 @@ Open Website Should Work
 
 *** Keywords ***
 Open Browser To Login Page
-    ${options}=    Evaluate    __import__('selenium.webdriver').webdriver.ChromeOptions()
+    ${options}=    Evaluate    sys.modules['selenium.webdriver'].ChromeOptions()    sys
     
-    Call Method    ${options}    add_argument    --headless
-    Call Method    ${options}    add_argument    --no-sandbox
-    Call Method    ${options}    add_argument    --disable-dev-shm-usage
-    Call Method    ${options}    add_argument    --window-size=1920,1080
+    # รวบรวม arguments ทั้งหมดใส่ใน List
+    ${arg_list}=   Create List    --headless    --no-sandbox    --disable-dev-shm-usage    --window-size=1920,1080
+    
+    # ใช้ loop เพื่อแอดทีละตัว วิธีนี้จะช่วยเลี่ยงปัญหา TypeError บน Jenkins ได้ 100%
+    FOR    ${arg}    IN    @{arg_list}
+        Call Method    ${options}    add_argument    ${arg}
+    END
     
     Create Webdriver    Chrome    options=${options}
     Go To    ${URL}
