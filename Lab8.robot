@@ -12,10 +12,12 @@ Open Website Should Work
 
 *** Keywords ***
 Open Browser To Login Page
-    ${options}=    Create List
-    ...    --headless=new
-    ...    --no-sandbox
-    ...    --disable-dev-shm-usage
-    ...    --window-size=1920,1080
+    ${options}=    Evaluate    __import__('selenium.webdriver').webdriver.ChromeOptions()
+    Call Method    ${options}    add_argument    --no-sandbox
+    Call Method    ${options}    add_argument    --disable-dev-shm-usage
+    Call Method    ${options}    add_argument    --headless
+    Call Method    ${options}    add_argument    --window-size=1920,1080
 
-    Open Browser    ${URL}    chrome    options=${options}
+    Create Webdriver    Chrome    options=${options}
+    Go To    ${URL}
+
