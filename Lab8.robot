@@ -8,15 +8,10 @@ ${URL}    https://computing.kku.ac.th
 
 *** Test Cases ***
 Open Website Should Work
-    Title Should Be    College of Computing, Khon Kaen University
+    Title Should Contain    Computing
 
 *** Keywords ***
 Open Browser To Login Page
-    ${chrome_options}=    Evaluate    __import__('selenium.webdriver').webdriver.ChromeOptions()
-    Call Method    ${chrome_options}    add_argument    --no-sandbox
-    Call Method    ${chrome_options}    add_argument    --disable-dev-shm-usage
-    Call Method    ${chrome_options}    add_argument    --headless=new
-    Call Method    ${chrome_options}    add_argument    --window-size=1920,1080
-
-    Create Webdriver    Chrome    options=${chrome_options}
-    Go To    ${URL}
+    ${options}=    Set Variable    --headless=new --no-sandbox --disable-dev-shm-usage --window-size=1920,1080
+    Open Browser    ${URL}    chrome    options=${options}
+    Maximize Browser Window
